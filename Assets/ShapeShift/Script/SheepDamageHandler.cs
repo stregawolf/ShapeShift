@@ -6,11 +6,10 @@ public class SheepDamageHandler : MonoBehaviour {
 
     public void OnCollisionEnter2D(Collision2D c)
     {
-        if (c.collider.gameObject.layer == Utils.kBoundsLayer)
+        Obstacle obstacle = c.collider.GetComponentInParent<Obstacle>();
+        if (obstacle != null && !obstacle.m_passed && Vector2.Dot(Vector2.up, c.contacts[0].normal) > 0.75f)
         {
-            return;
+            m_sheep.TakeDamage();
         }
-
-        m_sheep.TakeDamage();
     }
 }
